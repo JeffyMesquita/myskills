@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import {
-  ScrollView,
   View,
+  ScrollView,
   Text,
   StyleSheet,
   TextInput,
   Platform,
+  FlatList,
 } from 'react-native';
 import { Button } from '../components/Button';
 import { SkillCard } from '../components/SKillCard';
@@ -19,7 +20,7 @@ export function Home() {
   }
 
   return (
-    <ScrollView style={styles.container}>
+    <View style={styles.container}>
       <Text style={styles.title}>Welcome, Jeferson</Text>
       <TextInput
         style={styles.input}
@@ -32,10 +33,12 @@ export function Home() {
 
       <Text style={[styles.title, { marginVertical: 50 }]}>My Skills</Text>
 
-      {mySkills.map(skill => (
-        <SkillCard skill={skill} />
-      ))}
-    </ScrollView>
+      <FlatList
+        data={mySkills}
+        keyExtractor={item => item}
+        renderItem={({ item }) => <SkillCard skill={item} />}
+      />
+    </View>
   );
 }
 
@@ -44,7 +47,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#121015',
     paddingHorizontal: 30,
-    paddingVertical: 70,
+    paddingTop: 30,
   },
   title: {
     color: '#FFF',
