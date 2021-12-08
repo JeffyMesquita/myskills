@@ -27,7 +27,13 @@ export function Home() {
       name: newSkill,
     };
 
-    setMySkills(oldState => [...oldState, data]);
+    setMySkills((oldState: any) => [...oldState, data]);
+  }
+
+  function handleRemoveSkill(id: string) {
+    setMySkills((oldState: any) =>
+      oldState.filter((skill: any) => skill.id !== id)
+    );
   }
 
   useEffect(() => {
@@ -50,7 +56,7 @@ export function Home() {
         style={styles.input}
         placeholder="New Skill"
         placeholderTextColor="#555"
-        onChangeText={text => setNewSkill(text)}
+        onChangeText={(text: any) => setNewSkill(text)}
       />
 
       <Button title="Add" onPress={handleAddNewSkill} />
@@ -59,8 +65,8 @@ export function Home() {
 
       <FlatList
         data={mySkills}
-        keyExtractor={item => item.id}
-        renderItem={({ item }) => <SkillCard skill={item.name} />}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => <SkillCard skill={item.name} onPress={() => handleRemoveSkill(item.id)}/>}
       />
     </View>
   );
@@ -71,7 +77,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#121015',
     paddingHorizontal: 30,
-    paddingTop: 50,
+    paddingVertical: 50,
   },
   title: {
     color: '#FFF',
